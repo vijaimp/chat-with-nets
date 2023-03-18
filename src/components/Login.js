@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import {useNavigate} from "react-router-dom"
 import socketIO from "socket.io-client"
 
-const Login = () => {
+const Login = ({ getSocket }) => {
     const navigate = useNavigate()
     const [userName, setUserName] = useState("")
     const [chatServerAddress, setChatServerAddress] = useState("")
@@ -11,9 +11,9 @@ const Login = () => {
         e.preventDefault()
         const socket = socketIO.connect(chatServerAddress)
         localStorage.setItem("userName", userName)
-        localStorage.setItem("socket", socket)
         try {
           socket.emit("newUser", {userName, socketID: socket.id})
+          getSocket(socket)
           navigate("/chat")
         } catch (err) {
           console.log(err);
