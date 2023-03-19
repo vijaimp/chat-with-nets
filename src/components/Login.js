@@ -10,14 +10,35 @@ const Login = ({ getSocket }) => {
     "http://localhost:4000/"
   );
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    let location = {};
+    try {
+      const position = await getLocation();
+      location = {
+        latitude: position.coords.latitude,
+        longitude: position.coords.longitude,
+      };
+    } catch (err) {
+      console.log(err);
+    }
     const socket = socketIO.connect(chatServerAddress);
     localStorage.setItem("userName", userName);
-    socket.emit("login", { userName, location: "TODO", socketID: socket.id });
+    socket.emit("login", {
+      userName,
+      location: location,
+      socketID: socket.id,
+    });
     getSocket(socket);
     navigate("/chat");
   };
+
+  const getLocation = async () => {
+    return new Promise((resolve, reject) =>
+      navigator.geolocation.getCurrentPosition(resolve, reject)
+    );
+  };
+
   return (
     <form className='home__container' onSubmit={handleSubmit}>
       <h2 className='home__header'>Sign in to Open Chat</h2>
