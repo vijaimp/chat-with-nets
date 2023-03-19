@@ -14,18 +14,19 @@ let users = []
 
 socketIO.on('connection', (socket) => {
     console.log(`${socket.id} user just connected!`)  
+
+    socket.on("login", data => {
+      users.push(data)
+      socketIO.emit("message", {...data, message: `${data.userName} has connected from location`})
+    })
+
     socket.on("message", data => {
-      socketIO.emit("messageResponse", data)
+      socketIO.emit("messageResponse", {...data, text: `${data.text.split(':')[1]}`})
     })
 
     socket.on("typing", data => (
       socket.broadcast.emit("typingResponse", data)
     ))
-
-    socket.on("newUser", data => {
-      users.push(data)
-      socketIO.emit("newUserResponse", users)
-    })
  
     socket.on('disconnect', () => {
       console.log('A user disconnected');
