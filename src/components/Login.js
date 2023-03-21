@@ -42,6 +42,16 @@ const Login = ({ getSocket }) => {
   return (
     <form className='home__container' onSubmit={handleSubmit}>
       <h2 className='home__header'>Sign in to Open Chat</h2>
+      <label htmlFor='server'>Chat Server address</label>
+      <input
+        type='text'
+        minLength={10}
+        name='chatServerAddress'
+        id='chatServerAddress'
+        className='chat_address__input'
+        value={chatServerAddress}
+        onChange={(e) => setChatServerAddress(e.target.value)}
+      />
       <label htmlFor='username'>Username</label>
       <input
         type='text'
@@ -52,17 +62,7 @@ const Login = ({ getSocket }) => {
         value={userName}
         onChange={(e) => setUserName(e.target.value)}
       />
-      <label htmlFor='server'>Chat Server address</label>
-      <input
-        type='text'
-        minLength={10}
-        name='chatServerAddress'
-        id='chatServerAddress'
-        className='username__input'
-        value={chatServerAddress}
-        onChange={(e) => setChatServerAddress(e.target.value)}
-      />
-      <button className='home__cta'>Login</button>
+      <button className='home__cta'>Submit</button>
     </form>
   );
 };
