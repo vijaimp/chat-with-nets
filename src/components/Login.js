@@ -4,12 +4,14 @@ import socketIO from "socket.io-client";
 
 const Login = ({ getSocket }) => {
   const navigate = useNavigate();
-  // TODO: below hardcoded values to be removed once tested
-  const [userName, setUserName] = useState("Test user");
-  const [chatServerAddress, setChatServerAddress] = useState(
-    "http://localhost:4000/"
-  );
+  const [userName, setUserName] = useState("");
+  const [chatServerAddress, setChatServerAddress] = useState("");
+  const [validUrl, setValidUrl] = useState(false);
 
+  /**
+   * connect socket and send login message to the chat server
+   * @param {*} e
+   */
   const handleSubmit = async (e) => {
     e.preventDefault();
     let location = {};
@@ -33,10 +35,38 @@ const Login = ({ getSocket }) => {
     navigate("/chat");
   };
 
+  /**
+   *
+   * @returns position promise or error
+   */
   const getLocation = async () => {
     return new Promise((resolve, reject) =>
       navigator.geolocation.getCurrentPosition(resolve, reject)
     );
+  };
+
+  /**
+   *
+   * @param {*} URL
+   * @returns true if url is valid
+   */
+  const urlPatternValidation = (URL) => {
+    const regex = new RegExp(
+      "(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?"
+    );
+    return regex.test(URL);
+  };
+
+  /**
+   * set url validation flag and set the chat address
+   * @param {*} e
+   */
+  const changeUrl = (e) => {
+    const { value } = e.target;
+    const validUrl = urlPatternValidation(value) || value.includes("localhost");
+    console.log(validUrl);
+    setValidUrl(validUrl);
+    setChatServerAddress(e.target.value);
   };
 
   return (
@@ -45,12 +75,11 @@ const Login = ({ getSocket }) => {
       <label htmlFor='server'>Chat Server address</label>
       <input
         type='text'
-        minLength={10}
         name='chatServerAddress'
         id='chatServerAddress'
         className='chat_address__input'
         value={chatServerAddress}
-        onChange={(e) => setChatServerAddress(e.target.value)}
+        onChange={changeUrl}
       />
       <label htmlFor='username'>Username</label>
       <input
@@ -62,7 +91,9 @@ const Login = ({ getSocket }) => {
         value={userName}
         onChange={(e) => setUserName(e.target.value)}
       />
-      <button className='home__cta'>Submit</button>
+      <button className='home__cta' disabled={!validUrl}>
+        Submit
+      </button>
     </form>
   );
 };

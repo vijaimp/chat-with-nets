@@ -1,8 +1,11 @@
-import { render, screen } from '@testing-library/react';
-import App from './App';
+import { render, screen } from "@testing-library/react";
+import App from "./App";
 
-test('renders learn react link', () => {
+test("renders login page", () => {
   render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+  const chatServerInputTextElement = screen.getByText(/Chat Server address/i);
+  const usernameInputTextElement = screen.getByText(/Username/i);
+  expect(chatServerInputTextElement).toBeInTheDocument();
+  expect(usernameInputTextElement).toBeInTheDocument();
+  expect(screen.getByRole("button", { name: "Submit" })).toBeDisabled();
 });
