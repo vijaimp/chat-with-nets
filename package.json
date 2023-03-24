@@ -1,0 +1,25 @@
+{
+  "name": "chat-with-nets",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm run test -ws",
+    "start": "npm run start -ws"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vijaimp/chat-with-nets.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "workspaces": [
+    "back-end-chat",
+    "front-end-chat"
+  ],
+  "bugs": {
+    "url": "https://github.com/vijaimp/chat-with-nets/issues"
+  },
+  "homepage": "https://github.com/vijaimp/chat-with-nets#readme"
+}
