@@ -4,7 +4,6 @@ import React, { useEffect, useState } from "react";
 const ChatBody = ({ socket, messages, lastMessageRef }) => {
   const navigate = useNavigate();
   const [greeting, setGreeting] = useState();
-
   /**
    * receive greeting message from server
    */
@@ -27,16 +26,16 @@ const ChatBody = ({ socket, messages, lastMessageRef }) => {
    * @returns greeting message if connection successful with server or show error if connection fails
    */
   const Greeting = (props) => {
-    return props.greeting
+    return props.connected && greeting
       ? greeting
-      : "Chat server error.. Leave the chat and join with valid server address";
+      : "Still connecting...if takes time Leave the chat and join with valid server address";
   };
 
   return (
     <>
       <header className='chat__mainHeader'>
         <p>
-          <Greeting greeting={greeting} />
+          <Greeting connected={socket.connected} />
         </p>
         <button className='leaveChat__btn' onClick={handleLeaveChat}>
           LEAVE CHAT

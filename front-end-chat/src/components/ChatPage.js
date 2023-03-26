@@ -6,7 +6,6 @@ const ChatPage = ({ socket }) => {
   const [messages, setMessages] = useState([]);
 
   const lastMessageRef = useRef(null);
-
   /**
    * receive chat message from server
    */

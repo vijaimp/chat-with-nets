@@ -24,9 +24,9 @@ const Login = ({ getSocket }) => {
     } catch (err) {
       console.log(err);
     }
-    const socket = socketIO.connect(chatServerAddress);
+    const socket = await socketIO.connect(chatServerAddress);
     localStorage.setItem("userName", userName);
-    socket.emit("login", {
+    await socket.emit("login", {
       userName,
       location: location,
       socketID: socket.id,
@@ -64,7 +64,6 @@ const Login = ({ getSocket }) => {
   const changeUrl = (e) => {
     const { value } = e.target;
     const validUrl = urlPatternValidation(value) || value.includes("localhost");
-    console.log(validUrl);
     setValidUrl(validUrl);
     setChatServerAddress(e.target.value);
   };
