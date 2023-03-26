@@ -33,6 +33,6 @@ use [chat with me](https://master.d2ipyj7wtrus0h.amplifyapp.com/) to test the ap
 
 use following as input,
 
-Chat Server address : `https://18-234-169-216.nip.io:3443/`
+Chat Server address : `https://ec2-100-25-104-180.compute-1.amazonaws.com:3443/`
 
 Username: `<use any text with min 5 char>`
